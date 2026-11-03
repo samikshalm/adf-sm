@@ -1,0 +1,15 @@
+{
+	"name": "samadfoct",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "34be2509-3a4c-480e-a1ab-95e768b16d27",
+		"tenantId": "445d116f-4f48-4caf-afde-ea46cea28473"
+	}
+}

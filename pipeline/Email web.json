@@ -1,0 +1,124 @@
+{
+	"name": "Email web",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-20.northcentralus.logic.azure.com:443/workflows/0d79a1baad0343eb9a400ae0d55f3a8d/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=gMPPatQDfrXbwi3ZjTaXf5AH_MymJu_TygiCbNO2Lgk",
+					"body": {
+						"value": "@variables('final email')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "EMAIL BODY PREPARE",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "logic apps body",
+					"value": {
+						"value": "@concat(\n'The table ',\npipeline().parameters.table_name_web,\n' has been ingested and the status is ',\npipeline().parameters.status\n)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "prepare_email_subject",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "subject",
+					"value": {
+						"value": "@{pipeline().parameters.table_name_web}-@{pipeline().parameters.status}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "prepare_email_subject",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "EMAIL BODY PREPARE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "final email",
+					"value": {
+						"value": "{\n  \"recipient\": \"@{pipeline().parameters.recepient}\",\n  \"subject\": \"@{variables('subject')}\",\n  \"body\": \"@{variables('logic apps body')}\"\n}pipeline().parameters.recepient",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"table_name_web": {
+				"type": "string"
+			},
+			"status": {
+				"type": "string"
+			},
+			"recepient": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"logic apps body": {
+				"type": "String"
+			},
+			"subject": {
+				"type": "String"
+			},
+			"final email": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-11-02T04:30:31Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
