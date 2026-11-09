@@ -1,0 +1,23 @@
+{
+	"name": "AzureSqlDatabase2_fn",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "ct-care-sql-server.database.windows.net",
+			"database": "free-sql-db-ct-care",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "peeyush",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sql-server-ctares"
+			}
+		}
+	}
+}
