@@ -1,0 +1,15 @@
+{
+	"name": "ctkindcare",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8835d0ee-8b1d-4beb-874d-7345e01e9f8b",
+		"tenantId": "445d116f-4f48-4caf-afde-ea46cea28473"
+	}
+}

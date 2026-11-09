@@ -1,0 +1,13 @@
+{
+	"name": "PostgreSqlTables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PostgreSql_CT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
